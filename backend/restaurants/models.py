@@ -5,7 +5,7 @@ class Restaurants(models.Model):
     name = models.CharField(max_length=50)
     location = models.CharField(max_length=70)
     food_type = models.CharField(max_length=50)
-    rating = models.FloatField(null=True)
+    rating = models.FloatField(blank=True, null=True)
     rating_votes = models.IntegerField(default=0)
     checkbox = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
