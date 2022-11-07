@@ -1,38 +1,38 @@
 import Head from "next/head";
 import Layout from "../../components/layout";
-import { getAllPostIds, getPostData } from "../../lib/posts";
+import { getAllRestaurantIds, getRestaurantData } from "../../lib/restaurants";
 import Date from "../../components/date";
 import utilStyles from "../../styles/utils.module.css";
 
 export async function getStaticProps({ params }) {
-  const postData = await getPostData(params.id);
+  const restaurantData = await getRestaurantData(params.id);
   return {
     props: {
-      postData,
+      restaurantData,
     },
   };
 }
 
 export async function getStaticPaths() {
-  const paths = getAllPostIds();
+  const paths = await getAllRestaurantIds();
   return {
     paths,
     fallback: false,
   };
 }
 
-export default function Post({ postData }) {
+export default function RestaurantDetail({ restaurantData }) {
   return (
     <Layout>
       <Head>
-        <title>{postData.title}</title>
+        <title>{restaurantData.name}</title>
       </Head>
       <article>
-        <h1 className={utilStyles.headingXl}>{postData.title}</h1>
+        <h1 className={utilStyles.headingXl}>{restaurantData.title}</h1>
         <div className={utilStyles.lightText}>
-          <Date dateString={postData.date} />
+          <Date dateString={restaurantData.created_at} />
+          <p>{restaurantData.location}</p>
         </div>
-        <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
       </article>
     </Layout>
   );
