@@ -19,6 +19,8 @@ class RestaurantList(APIView):
             "name": request.data.get("name"),
             "location": request.data.get("location"),
             "food_type": request.data.get("food_type"),
+            "rating": request.data.get("rating"),
+            "checkbox": request.data.get("checkbox"),
         }
         serializer = RestaurantSerializer(data=data)
         if serializer.is_valid():
