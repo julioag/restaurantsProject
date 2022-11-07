@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import url from "../../config/url";
+import { useRouter } from "next/router";
 
 export default function NewRestaurant() {
+  const router = useRouter();
   const [name, setName] = useState("");
   const [food_type, setFoodType] = useState("");
   const [location, setLocation] = useState("");
@@ -21,6 +23,12 @@ export default function NewRestaurant() {
       },
       body: JSON.stringify(restaurant),
     });
+    if (response.ok) {
+      router.push("/");
+    } else {
+      setError("Something went wrong");
+      setLoading(false);
+    }
   };
 
   return (
