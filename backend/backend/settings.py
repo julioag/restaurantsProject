@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-fmehssbfe909+bi030d!@48qqw@(n0zy_60ibbes8ys52qb1$!'
+SECRET_KEY = 'django-insecure-hpswtw70fuw^x9q6$&f%3$(j8*5rj2m+b)vus&6&-p5q(w^r-+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,13 +31,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'restaurants.apps.RestaurantsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'restaurant_api'
 ]
 
 MIDDLEWARE = [
