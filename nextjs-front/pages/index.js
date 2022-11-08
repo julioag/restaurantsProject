@@ -3,6 +3,8 @@ import Layout, { siteTitle } from "../components/layout";
 import utilStyles from "../styles/utils.module.css";
 import { getAllRestaurantData } from "../lib/restaurants";
 import Table from "../components/table";
+import { useRouter } from "next/router";
+import { deleteRestaurant } from "../lib/restaurants";
 
 export async function getStaticProps() {
   const allRestaurantData = await getAllRestaurantData();
@@ -18,6 +20,16 @@ export async function getStaticProps() {
 }
 
 export default function Home({ allRestaurantData, columns }) {
+  const deleteMethod = async (id) => {
+    const status = await deleteRestaurant(id);
+    if (status) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const router = useRouter();
   return (
     <Layout home>
       <Head>
@@ -38,7 +50,11 @@ export default function Home({ allRestaurantData, columns }) {
         <button onClick={() => router.push("restaurants/new")}>
           Crear nuevo restaurant
         </button>
-        <Table data={allRestaurantData} columns={columns} />
+        <Table
+          data={allRestaurantData}
+          columns={columns}
+          deleteMethod={deleteMethod}
+        />
       </section>
     </Layout>
   );

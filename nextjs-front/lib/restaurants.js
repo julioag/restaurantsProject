@@ -48,3 +48,33 @@ export async function deleteRestaurant(id) {
     return false;
   }
 }
+
+export async function createRestaurant(restaurant) {
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(restaurant),
+  });
+  if (response.ok) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+export async function updateRestaurant(id, restaurant) {
+  const response = await fetch(`${url}/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(restaurant),
+  });
+  if (response.ok) {
+    return true;
+  } else {
+    return false;
+  }
+}

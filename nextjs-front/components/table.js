@@ -3,7 +3,7 @@ import TableBody from "./tableBody";
 import TableHead from "./tableHead";
 import SearchBar from "../components/searchBar";
 
-export default function Table({ data, columns }) {
+export default function Table({ data, columns, deleteMethod }) {
   const [tableData, setTableData] = useState(data);
   const handleSorting = (sortField, sortOrder) => {
     if (sortField) {
@@ -31,7 +31,11 @@ export default function Table({ data, columns }) {
       <SearchBar onSearch={handleSearch} field="name" />
       <table className="table">
         <TableHead columns={columns} handleSorting={handleSorting} />
-        <TableBody columns={columns} tableData={tableData} />
+        <TableBody
+          columns={columns}
+          tableData={tableData}
+          deleteMethod={deleteMethod}
+        />
       </table>
     </>
   );

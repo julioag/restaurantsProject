@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Date from "./date";
-export default function TableBody({ tableData, columns }) {
+export default function TableBody({ tableData, columns, deleteMethod }) {
   const router = useRouter();
   const handleDelete = async (id) => {
-    const responseStatus = await deleteRestaurant(id);
-    if (responseStatus) {
-      router.push("/");
+    const status = await deleteMethod(id);
+    if (status) {
+      router.reload();
     } else {
       alert("Something went wrong");
     }
