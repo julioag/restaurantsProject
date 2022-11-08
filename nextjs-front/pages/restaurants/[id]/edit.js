@@ -7,6 +7,7 @@ import {
 } from "../../../lib/restaurants";
 import { useRouter } from "next/router";
 import url from "../../../config/url";
+import RestaurantForm from "../../../components/restaurantForm";
 
 export async function getStaticProps({ params }) {
   const restaurantData = await getRestaurantData(params.id);
@@ -56,50 +57,17 @@ export default function EditRestaurant({ restaurantData }) {
 
   return (
     <Layout>
-      <div className="Form-restaurant">
-        <h2>Add a New Restaurant</h2>
-        <form onSubmit={handleSubmit}>
-          <label>Restaurant name:</label>
-          <input
-            type="text"
-            required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <label>Tipo de comida</label>
-          <input
-            type="text"
-            required
-            value={food_type}
-            onChange={(e) => setFoodType(e.target.value)}
-          />
-          <label>Location:</label>
-          <input
-            type="text"
-            required
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          />
-          <label>Rating:</label>
-          <input
-            type="number"
-            required
-            value={rating === null ? "" : rating}
-            onChange={(e) => setRating(e.target.value)}
-          />
-          <label>Checkbox:</label>
-          <input
-            type="checkbox"
-            value={checkbox}
-            checked={checkbox}
-            onChange={(e) => setCheckbox(e.currentTarget.checked)}
-          />
-          <p>Aquí esta el checkbox: </p>
-          {!loading && <button>Edit Restaurant</button>}
-          {loading && <button disabled>Editting Restaurant...</button>}
-          {error && <div>{error}</div>}
-        </form>
-      </div>
+      <h1>Edita el restaurant {name}</h1>
+      <RestaurantForm
+        name={name}
+        food_type={food_type}
+        location={location}
+        rating={rating}
+        checkbox={checkbox}
+        handleSubmit={handleSubmit}
+        error={error}
+        loading={loading}
+      />
     </Layout>
   );
 }

@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import url from "../../config/url";
 import { useRouter } from "next/router";
 import Layout from "../../components/layout";
+import RestaurantForm from "../../components/restaurantForm";
 
 export default function NewRestaurant() {
   const router = useRouter();
   const [name, setName] = useState("");
   const [food_type, setFoodType] = useState("");
   const [location, setLocation] = useState("");
-  const [rating, setRating] = useState("");
+  const [rating, setRating] = useState("2.5");
   const [checkbox, setCheckbox] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -34,48 +35,17 @@ export default function NewRestaurant() {
 
   return (
     <Layout>
-      <div className="Form-restaurant">
-        <h2>Add a New Restaurant</h2>
-        <form onSubmit={handleSubmit}>
-          <label>Restaurant name:</label>
-          <input
-            type="text"
-            required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <label>Tipo de comida</label>
-          <input
-            type="text"
-            required
-            value={food_type}
-            onChange={(e) => setFoodType(e.target.value)}
-          />
-          <label>Location:</label>
-          <input
-            type="text"
-            required
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          />
-          <label>Rating:</label>
-          <input
-            type="number"
-            required
-            value={rating}
-            onChange={(e) => setRating(e.target.value)}
-          />
-          <label>Checkbox:</label>
-          <input
-            type="checkbox"
-            value={checkbox}
-            onChange={(e) => setCheckbox(e.currentTarget.checked)}
-          />
-          {!loading && <button>Add Restaurant</button>}
-          {loading && <button disabled>Adding Restaurant...</button>}
-          {error && <div>{error}</div>}
-        </form>
-      </div>
+      <h1>Crea un nuevo restaurant</h1>
+      <RestaurantForm
+        name={name}
+        food_type={food_type}
+        location={location}
+        rating={rating}
+        checkbox={checkbox}
+        handleSubmit={handleSubmit}
+        error={error}
+        loading={loading}
+      />
     </Layout>
   );
 }
