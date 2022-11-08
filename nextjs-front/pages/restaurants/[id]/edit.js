@@ -6,6 +6,7 @@ import {
   getRestaurantData,
 } from "../../../lib/restaurants";
 import { useRouter } from "next/router";
+import url from "../../../config/url";
 
 export async function getStaticProps({ params }) {
   const restaurantData = await getRestaurantData(params.id);
@@ -38,7 +39,7 @@ export default function EditRestaurant({ restaurantData }) {
     e.preventDefault();
     setLoading(true);
     const restaurant = { name, location, food_type, rating, checkbox };
-    const response = await fetch(url, {
+    const response = await fetch(`${url}/${restaurantData.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

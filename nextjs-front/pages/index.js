@@ -1,9 +1,10 @@
 import Head from "next/head";
 import Layout, { siteTitle } from "../components/layout";
 import utilStyles from "../styles/utils.module.css";
-import { getAllRestaurantData } from "../lib/restaurants";
+import { getAllRestaurantData, deleteRestaurant } from "../lib/restaurants";
 import Link from "next/link";
 import Date from "../components/date";
+import { useRouter } from "next/router";
 
 export async function getStaticProps() {
   const allRestaurantData = await getAllRestaurantData();
@@ -15,6 +16,15 @@ export async function getStaticProps() {
 }
 
 const TableRow = function ({ restaurant }) {
+  const router = useRouter();
+  const handleDelete = async (id) => {
+    const responseStatus = await deleteRestaurant(id);
+    if (responseStatus) {
+      router.push("/");
+    } else {
+      alert("Something went wrong");
+    }
+  };
   return (
     <tr>
       <td>{restaurant.id}</td>
@@ -36,13 +46,7 @@ const TableRow = function ({ restaurant }) {
         </Link>
       </td>
       <td>
-        <button
-          onClick={() =>
-            console.log("acá debería llamarse a la api para eliminar")
-          }
-        >
-          Eliminar
-        </button>
+        <button onClick={() => handleDelete(restaurant.id)}>Eliminar</button>
       </td>
     </tr>
   );

@@ -34,3 +34,17 @@ export async function getRestaurantData(id) {
   const restaurant = await response.json();
   return restaurant;
 }
+
+export async function deleteRestaurant(id) {
+  const response = await fetch(`${url}/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (response.ok) {
+    return true;
+  } else {
+    return false;
+  }
+}
