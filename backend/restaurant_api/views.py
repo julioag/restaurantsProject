@@ -96,3 +96,8 @@ class restaurantDetailApiView(APIView):
             {"res": "Object deleted!"},
             status=status.HTTP_200_OK
         )
+class RestaurantFilteredByDate(APIView):
+    def get(self, request, date, *args, **kwargs):
+        restaurants = Restaurant.objects.filter(created_at__date__gte=date)
+        serializer = RestaurantSerializer(restaurants, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
