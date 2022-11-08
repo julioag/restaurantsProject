@@ -1,8 +1,11 @@
 import Head from "next/head";
-import Layout from "../../components/layout";
-import { getAllRestaurantIds, getRestaurantData } from "../../lib/restaurants";
-import Date from "../../components/date";
-import utilStyles from "../../styles/utils.module.css";
+import React, { useState } from "react";
+import Layout from "../../../components/layout";
+import {
+  getAllRestaurantIds,
+  getRestaurantData,
+} from "../../../lib/restaurants";
+import utilStyles from "../../../styles/utils.module.css";
 
 export async function getStaticProps({ params }) {
   const restaurantData = await getRestaurantData(params.id);

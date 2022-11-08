@@ -79,7 +79,7 @@ export default function Home({ allRestaurantData }) {
           </thead>
           <tbody>
             {allRestaurantData.map((restaurant) => (
-              <TableRow key="{restaurant.id}" restaurant={restaurant} />
+              <TableRow key={restaurant.id} restaurant={restaurant} />
             ))}
           </tbody>
         </table>

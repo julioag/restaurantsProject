@@ -1,15 +1,36 @@
+import Head from "next/head";
 import React, { useState } from "react";
-import url from "../../config/url";
+import Layout from "../../../components/layout";
+import {
+  getAllRestaurantIds,
+  getRestaurantData,
+} from "../../../lib/restaurants";
 import { useRouter } from "next/router";
-import Layout from "../../components/layout";
 
-export default function NewRestaurant() {
+export async function getStaticProps({ params }) {
+  const restaurantData = await getRestaurantData(params.id);
+  return {
+    props: {
+      restaurantData,
+    },
+  };
+}
+
+export async function getStaticPaths() {
+  const paths = await getAllRestaurantIds();
+  return {
+    paths,
+    fallback: false,
+  };
+}
+
+export default function EditRestaurant({ restaurantData }) {
   const router = useRouter();
-  const [name, setName] = useState("");
-  const [food_type, setFoodType] = useState("");
-  const [location, setLocation] = useState("");
-  const [rating, setRating] = useState("");
-  const [checkbox, setCheckbox] = useState(false);
+  const [name, setName] = useState(restaurantData.name);
+  const [food_type, setFoodType] = useState(restaurantData.food_type);
+  const [location, setLocation] = useState(restaurantData.location);
+  const [rating, setRating] = useState(restaurantData.rating);
+  const [checkbox, setCheckbox] = useState(restaurantData.checkbox);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -18,7 +39,7 @@ export default function NewRestaurant() {
     setLoading(true);
     const restaurant = { name, location, food_type, rating, checkbox };
     const response = await fetch(url, {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
@@ -62,17 +83,19 @@ export default function NewRestaurant() {
           <input
             type="number"
             required
-            value={rating}
+            value={rating === null ? "" : rating}
             onChange={(e) => setRating(e.target.value)}
           />
           <label>Checkbox:</label>
           <input
             type="checkbox"
             value={checkbox}
+            checked={checkbox}
             onChange={(e) => setCheckbox(e.currentTarget.checked)}
           />
-          {!loading && <button>Add Restaurant</button>}
-          {loading && <button disabled>Adding Restaurant...</button>}
+          <p>Aquí esta el checkbox: </p>
+          {!loading && <button>Edit Restaurant</button>}
+          {loading && <button disabled>Editting Restaurant...</button>}
           {error && <div>{error}</div>}
         </form>
       </div>
