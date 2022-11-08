@@ -5,6 +5,7 @@ import { getAllRestaurantData, deleteRestaurant } from "../lib/restaurants";
 import Link from "next/link";
 import Date from "../components/date";
 import { useRouter } from "next/router";
+import Table from "../components/table";
 
 export async function getStaticProps() {
   const allRestaurantData = await getAllRestaurantData();
@@ -14,43 +15,6 @@ export async function getStaticProps() {
     },
   };
 }
-
-const TableRow = function ({ restaurant }) {
-  const router = useRouter();
-  const handleDelete = async (id) => {
-    const responseStatus = await deleteRestaurant(id);
-    if (responseStatus) {
-      router.push("/");
-    } else {
-      alert("Something went wrong");
-    }
-  };
-  return (
-    <tr>
-      <td>{restaurant.id}</td>
-      <td>{restaurant.name}</td>
-      <td>{restaurant.location}</td>
-      <td>
-        <Date dateString={restaurant.created_at} />
-      </td>
-      <td>{restaurant.rating ? restaurant.rating : "Sin rating"}</td>
-      <td>{restaurant.checkbox ? "Visitado" : "No visitado"}</td>
-      <td>
-        <Link href={`/restaurants/${restaurant.id}`}>
-          <button>Detalle</button>
-        </Link>
-      </td>
-      <td>
-        <Link href={`/restaurants/${restaurant.id}/edit`}>
-          <button>Editar</button>
-        </Link>
-      </td>
-      <td>
-        <button onClick={() => handleDelete(restaurant.id)}>Eliminar</button>
-      </td>
-    </tr>
-  );
-};
 
 export default function Home({ allRestaurantData }) {
   return (
@@ -70,23 +34,7 @@ export default function Home({ allRestaurantData }) {
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Restaurantes</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>id</th>
-              <th>Nombre</th>
-              <th>Ubicación</th>
-              <th>Fecha de creación</th>
-              <th>Rating</th>
-              <th>Visitado</th>
-            </tr>
-          </thead>
-          <tbody>
-            {allRestaurantData.map((restaurant) => (
-              <TableRow key={restaurant.id} restaurant={restaurant} />
-            ))}
-          </tbody>
-        </table>
+        <Table data={allRestaurantData} />
       </section>
     </Layout>
   );
