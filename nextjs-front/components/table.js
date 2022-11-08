@@ -1,12 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TableBody from "./tableBody";
 import TableHead from "./tableHead";
+import SearchBar from "../components/searchBar";
 
-export default function Table({ data }) {
+export default function Table({ data, columns }) {
   const [tableData, setTableData] = useState(data);
-  const columns = Object.keys(tableData[0]).map((key) => {
-    return { label: key };
-  });
   const handleSorting = (sortField, sortOrder) => {
     if (sortField) {
       const sorted = [...tableData].sort((a, b) => {
@@ -22,8 +20,15 @@ export default function Table({ data }) {
       setTableData(sorted);
     }
   };
+  const handleSearch = (search) => {
+    const filter = data.filter((restaurant) => {
+      return restaurant.name.toLowerCase().includes(search.toLowerCase());
+    });
+    setTableData(filter);
+  };
   return (
     <>
+      <SearchBar onSearch={handleSearch} field="name" />
       <table className="table">
         <TableHead columns={columns} handleSorting={handleSorting} />
         <TableBody columns={columns} tableData={tableData} />

@@ -1,23 +1,23 @@
 import Head from "next/head";
 import Layout, { siteTitle } from "../components/layout";
 import utilStyles from "../styles/utils.module.css";
-import { getAllRestaurantData, deleteRestaurant } from "../lib/restaurants";
-import Link from "next/link";
-import Date from "../components/date";
-import { useRouter } from "next/router";
+import { getAllRestaurantData } from "../lib/restaurants";
 import Table from "../components/table";
 
 export async function getStaticProps() {
   const allRestaurantData = await getAllRestaurantData();
+  const columns = Object.keys(allRestaurantData[0]).map((key) => {
+    return { label: key };
+  });
   return {
     props: {
       allRestaurantData,
+      columns,
     },
   };
 }
 
-export default function Home({ allRestaurantData }) {
-  const router = useRouter();
+export default function Home({ allRestaurantData, columns }) {
   return (
     <Layout home>
       <Head>
@@ -38,7 +38,7 @@ export default function Home({ allRestaurantData }) {
         <button onClick={() => router.push("restaurants/new")}>
           Crear nuevo restaurant
         </button>
-        <Table data={allRestaurantData} />
+        <Table data={allRestaurantData} columns={columns} />
       </section>
     </Layout>
   );
