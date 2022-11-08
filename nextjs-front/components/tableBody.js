@@ -34,11 +34,6 @@ export default function TableBody({ tableData, columns }) {
               return <td key={`${data.id} - ${label}`}>{tData}</td>;
             })}
             <td>
-              <Link href={`/restaurants/${data.id}`}>
-                <button>Detalle</button>
-              </Link>
-            </td>
-            <td>
               <Link href={`/restaurants/${data.id}/edit`}>
                 <button>Editar</button>
               </Link>

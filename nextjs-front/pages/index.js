@@ -17,6 +17,7 @@ export async function getStaticProps() {
 }
 
 export default function Home({ allRestaurantData }) {
+  const router = useRouter();
   return (
     <Layout home>
       <Head>
@@ -34,6 +35,9 @@ export default function Home({ allRestaurantData }) {
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Restaurantes</h2>
+        <button onClick={() => router.push("restaurants/new")}>
+          Crear nuevo restaurant
+        </button>
         <Table data={allRestaurantData} />
       </section>
     </Layout>
