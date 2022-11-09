@@ -1,6 +1,6 @@
-import { parseISO, format } from "date-fns";
-
 export default function Date({ dateString }) {
-  const date = parseISO(dateString);
-  return <time dateTime={dateString}>{format(date, "LLLL d, yyyy")}</time>;
+  const day = dateString.slice(8, 10);
+  const month = dateString.slice(5, 7);
+  const year = dateString.slice(0, 4);
+  return <p>{`${day}/${month}/${year}`}</p>;
 }
