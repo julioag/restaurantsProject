@@ -4,6 +4,7 @@ import TableHead from "./tableHead";
 import SearchBar from "../components/searchBar";
 import DateFilter from "../components/dateFilter";
 import { getRestaurantsByDate } from "../lib/restaurants";
+import styles from "../styles/table.module.css";
 
 export default function Table({ data, columns, deleteMethod }) {
   const [tableData, setTableData] = useState(data);
@@ -43,10 +44,22 @@ export default function Table({ data, columns, deleteMethod }) {
   };
   return (
     <>
-      <SearchBar onSearch={handleLocationSearch} field="location" />
-      <SearchBar onSearch={handleSearch} field="name" />
-      <DateFilter handleSubmit={getDateFilter} field="date" />
-      <table className="table">
+      <SearchBar
+        className={styles.filter}
+        onSearch={handleLocationSearch}
+        field="location"
+      />
+      <SearchBar
+        className={styles.filter}
+        onSearch={handleSearch}
+        field="name"
+      />
+      <DateFilter
+        className={styles.filter}
+        handleSubmit={getDateFilter}
+        field="date"
+      />
+      <table className={styles.table}>
         <TableHead columns={columns} handleSorting={handleSorting} />
         <TableBody
           columns={columns}

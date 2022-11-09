@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Date from "./date";
+import styles from "../styles/table.module.css";
 export default function TableBody({ tableData, columns, deleteMethod }) {
   const router = useRouter();
   const handleDelete = async (id) => {
@@ -20,18 +21,22 @@ export default function TableBody({ tableData, columns, deleteMethod }) {
               const tData = data[label] ? data[label] : "——";
               if (label === "created_at" || label === "updated_at") {
                 return (
-                  <td key={`${data.id} - ${label}`}>
+                  <td className={styles.cell} key={`${data.id} - ${label}`}>
                     <Date dateString={data[label]} />
                   </td>
                 );
               } else if (label === "checkbox") {
                 return (
-                  <td key={`${data.id} - ${label}`}>
+                  <td className={styles.cell} key={`${data.id} - ${label}`}>
                     {data[label] ? "Visitado" : "No visitado"}
                   </td>
                 );
               }
-              return <td key={`${data.id} - ${label}`}>{tData}</td>;
+              return (
+                <td className={styles.cell} key={`${data.id} - ${label}`}>
+                  {tData}
+                </td>
+              );
             })}
             <td>
               <Link href={`/restaurants/${data.id}/edit`}>

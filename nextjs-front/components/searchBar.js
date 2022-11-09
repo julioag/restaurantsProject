@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useEffect } from "react";
-export default function SearchBar({ onSearch, field }) {
+export default function SearchBar({ onSearch, field, className }) {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
     onSearch(search);
   }, [search]);
   return (
-    <div className="FilterContainer">
+    <div className={className}>
       <label>Filtra por {field} </label>
       <input
         type="text"

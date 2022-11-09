@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-export default function ApiFilter({ field, handleSubmit }) {
+export default function ApiFilter({ field, handleSubmit, className }) {
   const [date, setDate] = useState("");
 
   return (
-    <div className="FilterContainer">
+    <div className={className}>
       <label>Filtra por {field} (API) </label>
       <input
         type="date"
