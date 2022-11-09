@@ -7,7 +7,7 @@ export default function SearchBar({ onSearch, field }) {
     onSearch(search);
   }, [search]);
   return (
-    <div className="searchContainer">
+    <div className="FilterContainer">
       <label>Filtra por {field} </label>
       <input
         type="text"

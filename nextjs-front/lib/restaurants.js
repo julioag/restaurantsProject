@@ -78,3 +78,14 @@ export async function updateRestaurant(id, restaurant) {
     return false;
   }
 }
+
+export async function getRestaurantsByDate(date) {
+  const response = await fetch(`${url}/bydate/${date}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const restaurants = await response.json();
+  return restaurants;
+}

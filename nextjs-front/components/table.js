@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import TableBody from "./tableBody";
 import TableHead from "./tableHead";
 import SearchBar from "../components/searchBar";
+import DateFilter from "../components/dateFilter";
+import { getRestaurantsByDate } from "../lib/restaurants";
 
 export default function Table({ data, columns, deleteMethod }) {
   const [tableData, setTableData] = useState(data);
+  const [currentData, setCurrentData] = useState(data);
   const handleSorting = (sortField, sortOrder) => {
     if (sortField) {
       const sorted = [...tableData].sort((a, b) => {
@@ -21,21 +24,28 @@ export default function Table({ data, columns, deleteMethod }) {
     }
   };
   const handleSearch = (search) => {
-    const filter = data.filter((restaurant) => {
+    const filter = currentData.filter((restaurant) => {
       return restaurant.name.toLowerCase().includes(search.toLowerCase());
     });
     setTableData(filter);
   };
   const handleLocationSearch = (search) => {
-    const filter = data.filter((restaurant) => {
+    const filter = currentData.filter((restaurant) => {
       return restaurant.location.toLowerCase().includes(search.toLowerCase());
     });
+    setTableData(filter);
+  };
+
+  const getDateFilter = async (date) => {
+    const filter = await getRestaurantsByDate(date);
+    setCurrentData(filter);
     setTableData(filter);
   };
   return (
     <>
       <SearchBar onSearch={handleLocationSearch} field="location" />
       <SearchBar onSearch={handleSearch} field="name" />
+      <DateFilter handleSubmit={getDateFilter} field="date" />
       <table className="table">
         <TableHead columns={columns} handleSorting={handleSorting} />
         <TableBody
