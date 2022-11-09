@@ -26,8 +26,15 @@ export default function Table({ data, columns, deleteMethod }) {
     });
     setTableData(filter);
   };
+  const handleLocationSearch = (search) => {
+    const filter = data.filter((restaurant) => {
+      return restaurant.location.toLowerCase().includes(search.toLowerCase());
+    });
+    setTableData(filter);
+  };
   return (
     <>
+      <SearchBar onSearch={handleLocationSearch} field="location" />
       <SearchBar onSearch={handleSearch} field="name" />
       <table className="table">
         <TableHead columns={columns} handleSorting={handleSorting} />
